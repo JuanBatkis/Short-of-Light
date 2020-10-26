@@ -4,7 +4,11 @@ let myGameArea = {
         this.canvas.width = document.documentElement.clientWidth*1;
         this.canvas.height = document.documentElement.clientHeight*1;
         this.context = this.canvas.getContext("2d");
-        document.getElementById('canvasSection').appendChild(this.canvas);
+		document.getElementById('canvasSection').appendChild(this.canvas);
+		
+		oilSound = new sound('./../assets/oil.mp3', false);
+		gameMusic = new sound('./../assets/game-loop.mp3', true);
+		gameMusic.play();
     },
 };
 
@@ -32,12 +36,13 @@ let keysDown = {
 },
 keys = [37,	38,	39,	40,	65,	87,	68,	83];
 
-let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 1);
+let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 0.7);
 let viewport = new Viewport(0, 0, 200, 200);
-let oilJars = {};
-for (let index = 0; index < map.oil; index++) {
-	oilJars[index] = new Item(scale);
-}
+
+let oilJars = [];
+map.oilCoordinates.forEach((element) => {
+	oilJars.push(new Item(element.x, element.y, scale));
+});
 
 let loadedImgs = 0
 let mapTileSheet = new Image();
@@ -114,6 +119,7 @@ const drawGame = function() {
 	player.oil -= 0.1 * difficulty;
 	oilJar.style.height = (player.oil/10).toFixed(1) + '%';
 
+	//If the player runs out of oil, game over
 	if (player.oil <= 0) {
 		//gameOver();
 	}
@@ -126,7 +132,8 @@ const drawGame = function() {
 
 	//Draw main map
 	createMap(map.mapMain, true, width, height);
-	placeObjects(map.mapOil, width, height);
+	//Draw oil jars
+	placeObjects(oilJars, width, height);
 
 	//Draw player
 	player.draw(width * 0.5 - viewport.w * 0.25, height * 0.5 - viewport.h * 0.25, keysDown);

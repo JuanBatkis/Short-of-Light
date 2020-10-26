@@ -63,14 +63,14 @@ class Character {
     }
 
     tileCollision(tile, width, height) {
-        const playerX = (width - player.width)/2, playerY = (height + player.height)/2 + player.height/4;
+        const playerX = (width - this.width)/2, playerY = (height + this.height)/2 + this.height/4;
     
-        const vX = playerX + player.width / 2 - (tile.x + tile.width / 2),
-            vY = playerY - player.height / 2 - (tile.y + tile.height / 2),
+        const vX = playerX + this.width / 2 - (tile.x + tile.width / 2),
+            vY = playerY - this.height / 2 - (tile.y + tile.height / 2),
     
             // Add the half widths and half heights of the objects
-            hWidths = (player.width - player.height/4) / 2 + tile.width / 2,
-            hHeights = (player.height - 0) / 4 + tile.height / 2;
+            hWidths = (this.width - this.height/4) / 2 + tile.width / 2,
+            hHeights = (this.height - 0) / 4 + tile.height / 2;
     
         /* ctx.beginPath();
         ctx.arc(playerX, playerY, 10, 0, 2 * Math.PI);
@@ -86,47 +86,46 @@ class Character {
             if (oX >= oY) {
                 if (vY > 0) {
                     direction = "top";
-                    player.y += oY;
+                    this.y += oY;
                 } else {
                     direction = "bottom";
-                    player.y -= oY;
+                    this.y -= oY;
                 }
             } else {
                 if (vX > 0) {
                     direction = "left";
-                    player.x += oX;
+                    this.x += oX;
                 } else {
                     direction = "right";
-                    player.x -= oX;
+                    this.x -= oX;
                 }
             }
         }
     
         if (direction === "left" || direction === "right") {
-            player.velocity_x = 0 // Prevents lateral movement
+            this.velocity_x = 0 // Prevents lateral movement
         }
         if (direction === "bottom" || direction === "top") {
-            player.velocity_y = 0; // Prevents vertical movement
+            this.velocity_y = 0; // Prevents vertical movement
         }
     }
 
-    objectCollision(object, width, height) {
-        const playerX = (width - player.width)/2, playerY = (height + player.height)/2 + player.height/4;
+    objectCollision(objects, index, width, height) {
+        const playerX = (width - this.width)/2, playerY = (height + this.height)/2 + this.height/4;
     
-        const vX = playerX + player.width / 2 - (object.xCol + object.wCol / 2),
-            vY = playerY - player.height / 2 - (object.yCol + object.hCol / 2),
+        const vX = playerX + this.width / 2 - (objects[index].xCol + objects[index].wCol / 2),
+            vY = playerY - this.height / 2 - (objects[index].yCol + objects[index].hCol / 2),
     
             // Add the half widths and half heights of the objects
-            hWidths = (player.width - player.height/4) / 2 + object.wCol / 2,
-            hHeights = (player.height - 0) / 4 + object.hCol / 2;
+            hWidths = (this.width - this.height/4) / 2 + objects[index].wCol / 2,
+            hHeights = (this.height - 0) / 4 + objects[index].hCol / 2;
     
     
         // If the player and the object are less than the half width or half height, then we must be inside the object, causing a collision
         if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
-
-            console.log('choca');
-            player.oil = 1000;
-
+            this.oil = 1000;
+            oilSound.play();
+            delete objects[index];
         }
     
     }
@@ -180,9 +179,11 @@ class Character {
 }
 
 class Item {
-    constructor(scale) {
+    constructor(coordX, coordY, scale) {
         this.width = 32;
         this.height = 32;
+        this.coordX = coordX;
+        this.coordY = coordY;
         this.scale = scale;
         this.xCol = 0;
         this.yCol = 0;
