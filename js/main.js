@@ -36,7 +36,7 @@ let keysDown = {
 },
 keys = [37,	38,	39,	40,	65,	87,	68,	83];
 
-let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 3); //0.7
+let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 0.7); //0.7
 let viewport = new Viewport(0, 0, 400, 400);
 let light = new Light(scale, width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5, player.width, player.height);
 
