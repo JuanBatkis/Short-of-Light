@@ -36,7 +36,7 @@ let keysDown = {
 },
 keys = [37,	38,	39,	40,	65,	87,	68,	83];
 
-let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 0.7); //0.7
+let player = new Character(map.spawnX * scale, map.spawnY * scale, scale, 3); //0.7
 let viewport = new Viewport(0, 0, 400, 400);
 let light = new Light(scale, width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5, player.width, player.height);
 
@@ -47,7 +47,6 @@ map.itemsCoordinates.forEach((element) => {
 
 let loadedImgs = 0
 let mapTileSheet = new Image();
-//mapTileSheet.addEventListener('load', (event) => { loadedImgs++ });
 mapTileSheet.src = './assets/wall-sprites.png';
 
 window.onload = function() {
@@ -72,8 +71,6 @@ window.onload = function() {
 	player.ctx = ctx;
 	light.ctx = ctx;
 	oilJar = document.querySelector('#canvasSection .oilCont .oilJar .oil');
-
-	//if(loadedImgs === 2) drawGame();
 
 	ctx.font = "10pt sans-serif";
 
@@ -169,10 +166,6 @@ const drawGame = function() {
 	ctx.fillStyle = '#ff0000';
 	ctx.fillText('FPS: ' + framesLastSecond, 10, 60);
 	
-	/* ctx.strokeStyle = '#ffffff';
-	ctx.rect(width * 0.5 - viewport.w * 0.5, height * 0.5 - viewport.h * 0.5, viewport.w, viewport.h);
-	ctx.stroke(); */
-	
 	//Draw light beam
 	ctx.save();
 	ctx.globalCompositeOperation = "multiply";
@@ -184,11 +177,6 @@ const drawGame = function() {
 	ctx.globalCompositeOperation = "destination-in";
 	light.draw(width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5,'light', keysDown, player.direction);
 	ctx.restore();
-
-	//Draw black cover over finish line
-	//createMap(map.mapBlack, false, width, height);
-
-	//ctx.clearRect(0, 0, myGameArea.canvas.width, myGameArea.canvas.height);
 
 	if(play) requestAnimationFrame(drawGame);
 

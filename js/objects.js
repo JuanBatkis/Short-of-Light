@@ -34,9 +34,7 @@ class Character {
         // Load the image
         const cImg = new Image();
         cImg.addEventListener('load', () => {
-            // Once image loaded => draw
             this.cImg = cImg;
-            //this.draw();
         });
         cImg.src = './assets/character-sprite-sheet-2.png';
     }
@@ -73,10 +71,6 @@ class Character {
             // Add the half widths and half heights of the objects
             hWidths = (this.width - this.height/4) / 2 + tile.width / 2,
             hHeights = (this.height - 0) / 4 + tile.height / 2;
-    
-        /* ctx.beginPath();
-        ctx.arc(playerX, playerY, 10, 0, 2 * Math.PI);
-        ctx.fill(); */
     
         // If the player and the tile are less than the half width or half height, then we must be inside the tile, causing a collision
         if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
@@ -189,10 +183,7 @@ class Character {
         }
 
         this.ctx.drawImage(this.cImg, this.frameX, this.frameY, 32, 31.99, x - 1*this.scale, y, this.width, this.height);
-        //this.ctx.drawImage(this.lImg, x, y, this.width, this.height);
 
-        /* this.ctx.rect(x + 3 * this.scale, y + this.height, this.width - 3 * this.scale * 2, - this.height / 4);
-        this.ctx.stroke(); */
     }
 
 }
@@ -276,13 +267,6 @@ class Light {
             this.ctx.drawImage(this.mImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
         }
 
-
-        /* ctx.strokeStyle = '#ffffff';
-        this.ctx.rect(this.xPos, this.yPos, this.width, this.height);
-        this.ctx.stroke();
-
-        this.ctx.rect(this.x, this.y, this.pWidth, this.pHeight);
-        this.ctx.stroke(); */
     }
 }
 

@@ -109,23 +109,8 @@ const createMap = function(layer, colide, width, height) {
 			let tileY = Math.floor(y * tilesize * scale - viewport.y + height * 0.5 - viewport.h * 0.5);// Tile y destination for drawing
 
 			ctx.drawImage(mapTileSheet, value * tilesize, 0, tilesize, tilesize, tileX, tileY, tilesize * scale, tilesize * scale);
-
-			/* ctx.fillStyle = 'green';
-			ctx.fillRect(map.mapBlack.coord.x, map.mapBlack.coord.y, map.mapBlack.size.w * tilesize * scale, map.mapBlack.size.h * tilesize * scale); */
 			
-			if (colide && value !== 0 && value !== -1) {
-				/* ctx.fillStyle = "#ff0000";
-				ctx.textAlign =  "start";
-				ctx.textBaseline = "top"
-				ctx.fillText(tileX + ' ' + tileY, tileX, tileY);
-				ctx.textBaseline = "bottom";
-				ctx.fillText(tileX + ' ' + tileY + tilesize * scale, tileX, tileY + tilesize * scale);
-				ctx.fillStyle = "blue";
-				ctx.textAlign =  "end";
-				ctx.textBaseline = "top"
-				ctx.fillText(tileX + tilesize * scale + ' ' + tileY, tileX + tilesize * scale, tileY);
-				ctx.textBaseline = "bottom";
-				ctx.fillText(tileX + tilesize * scale + ' ' + tileY + tilesize * scale, tileX + tilesize * scale, tileY + tilesize * scale); */
+			if (colide && value !== 0) {
 
 				let tile = {
 					x:tileX,
@@ -136,10 +121,7 @@ const createMap = function(layer, colide, width, height) {
 
 				player.tileCollision(tile, width, height);
 
-			} else if(value === 22) {
-				ctx.fillStyle = '#0F0717';
-				ctx.fillRect(tileX - tilesize * scale * 2, tileY - tilesize * scale * 2, tilesize * scale * 3, tilesize * scale * 3);
-			}
+			} 
 
 		}
 
