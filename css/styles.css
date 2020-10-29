@@ -1,6 +1,6 @@
 :root {
     --dark-col: #0F0717;
-    --light-col: #24123B;
+    --light-col: #201035; /*201035 24123B*/
 }
 
 * {
@@ -22,8 +22,138 @@ body {
     overflow: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
     font-family: 'Press Start 2P', cursive;
+}
+
+section.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0vh;
+    opacity: 1;
+    transition: opacity .6s .6s, top .1s .0s;
+}
+
+section.hidden {
+    transition: opacity .6s 0s, top .1s .6s;
+    top: -100vh;
+    opacity: 0;
+}
+
+#titleScreen h1 {
+    font-size: 2.4em;
+    padding-bottom: 25px;
+}
+
+#titleScreen #beginLamp {
+    cursor: pointer;
+    transform: translateY(25px);
+    animation-name: lightBounce;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+@keyframes lightBounce {
+    0% {transform: translateY(25px);}
+    50% {transform: translateY(0px);}
+    100% {transform: translateY(25px);}
+}
+
+#titleScreen #beginLamp img {
+    width: 120px;
+    image-rendering: pixelated;
+    z-index: 2;
+    position: relative;
+}
+
+#titleScreen #beginLamp h5 {
+    text-align: center;
+    padding-top: 4px;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform .6s, opacity .6s;
+}
+
+#titleScreen #beginLamp:hover h5 {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+#titleScreen #begin {
+    margin-top: 25px;
+    cursor: pointer;
+    padding: 14px;
+    background-image: url('./../assets/game-over-border.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    transition: transform .5s;
+}
+
+#titleScreen #begin:hover {
+    transform: scale(1.06);
+}
+
+#introScreen p {
+    padding: 0 20px;
+    max-width: 800px;
+    text-align: center;
+    line-height: 1.6em;
+}
+
+#introScreen #continue {
+    margin-top: 25px;
+    cursor: pointer;
+    padding: 14px 26px;
+    background-image: url('./../assets/game-over-border.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    transition: transform .5s;
+}
+
+#introScreen #continue:hover {
+    transform: scale(1.06);
+}
+
+#instructions .container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    border: 2px solid #ffffff80;
+}
+
+#instructions .container .col-6 {
+    width: 50%;
+    padding: 12px 12px 12px 12px;
+    box-sizing: border-box;
+    border: 2px solid #ffffff80;
+}
+
+#instructions .container .col-6 p {
+    text-align: center;
+    line-height: 1.6em;
+}
+
+#instructions #startGame {
+    margin-top: 25px;
+    cursor: pointer;
+    padding: 14px 26px;
+    background-image: url('./../assets/game-over-border.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    transition: transform .5s;
+}
+
+#instructions #startGame:hover {
+    transform: scale(1.06);
 }
 
 #canvasSection {
@@ -105,6 +235,32 @@ h1, h2, h3, h4, h5, h6 {
 
 #canvasSection #gameOver #tryAgain h5 {
     font-size: 1.2em;
+}
+
+#canvasSection #bedTime {
+    flex-direction: column;
+    background-color: #0f071740;
+    transition: opacity 2s;
+}
+
+#canvasSection #bedTime > div {
+    position: absolute;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 800px;
+    margin-top: 60vh;
+    opacity: 0;
+    transition: margin 2s, opacity 2s;
+}
+
+#canvasSection #bedTime > div.show {
+    margin-top: 0vh;
+    opacity: 1;
+}
+
+#canvasSection #bedTime > div.hide {
+    margin-top: -60vh;
+    opacity: 0;
 }
 
 #canvasSection .oilCont {

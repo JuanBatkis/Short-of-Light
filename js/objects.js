@@ -28,6 +28,8 @@ class Character {
         this.frame = 0;
         this.frameX = 0; //Sprite sheet X position
         this.frameY = 0; //Sprite sheet Y position
+        this.direction = 'right';
+        this.keysFound = 0;
 
         // Load the image
         const cImg = new Image();
@@ -36,7 +38,7 @@ class Character {
             this.cImg = cImg;
             //this.draw();
         });
-        cImg.src = './../assets/character-sprite-sheet-2.png';
+        cImg.src = './assets/character-sprite-sheet-2.png';
     }
 
     moveLeft() {
@@ -123,9 +125,17 @@ class Character {
     
         // If the player and the object are less than the half width or half height, then we must be inside the object, causing a collision
         if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
-            this.oil = 1000;
-            oilSound.play();
-            delete objects[index];
+            if (objects[index].type === 'bed') {
+                console.log('win!');
+            } else if (objects[index].type === 'key') {
+                console.log('key');
+                this.keysFound++;
+                delete objects[index];
+            } else if (objects[index].type === 'oil') {
+                this.oil = 1000;
+                oilSound.play();
+                delete objects[index];
+            }
         }
     
     }
@@ -138,28 +148,36 @@ class Character {
 
         if (keysDown[37] === true || keysDown[65] === true) { // Player holding left
             this.frameY = 32;
+            this.direction = 'left';
         }
         if (keysDown[38] === true || keysDown[87] === true) { // Player holding up
             this.frameY = 64;
+            this.direction = 'up';
         }
         if (keysDown[39] === true || keysDown[68] === true) { // Player holding right
             this.frameY = 0;
+            this.direction = 'right';
         }
         if (keysDown[40] === true || keysDown[83] === true) { // Player holding down
             this.frameY = 0;
+            this.direction = 'down';
         }
 
         if ((keysDown[37] === true || keysDown[65] === true) && (keysDown[40] === true || keysDown[83] === true)) { // Player holding left and down
             this.frameY = 32;
+            this.direction = 'leftDown';
         }
         if ((keysDown[37] === true || keysDown[65] === true) && (keysDown[38] === true || keysDown[87] === true)) { // Player holding left and up
             this.frameY = 64;
+            this.direction = 'leftUp';
         }
         if ((keysDown[39] === true || keysDown[68] === true) && (keysDown[40] === true || keysDown[83] === true)) { // Player holding right and down
             this.frameY = 0;
+            this.direction = 'rightDown';
         }
         if ((keysDown[39] === true || keysDown[68] === true) && (keysDown[38] === true || keysDown[87] === true)) { // Player holding right and up
             this.frameY = 96;
+            this.direction = 'rightUp';
         }
 
         if (absVelocity === 0) { //Player is not moving
@@ -170,7 +188,8 @@ class Character {
             this.frameX = (Math.round(this.frame%9)) * 32;
         }
 
-        this.ctx.drawImage(this.cImg, this.frameX, this.frameY, 32, 31.99, x, y, this.width, this.height);
+        this.ctx.drawImage(this.cImg, this.frameX, this.frameY, 32, 31.99, x - 1*this.scale, y, this.width, this.height);
+        //this.ctx.drawImage(this.lImg, x, y, this.width, this.height);
 
         /* this.ctx.rect(x + 3 * this.scale, y + this.height, this.width - 3 * this.scale * 2, - this.height / 4);
         this.ctx.stroke(); */
@@ -178,8 +197,97 @@ class Character {
 
 }
 
+class Light {
+    constructor(scale, x, y, pWidth, pHeight) {
+        this.width = 79*scale;
+        this.height = 79*scale;
+        this.scale = scale;
+        this.x = x;
+        this.y = y;
+        this.pWidth = pWidth;
+        this.pHeight = pHeight;
+        this.xPos = this.x;
+        this.yPos = this.y - this.height/2 + this.pHeight/2;
+        this.ctx = null;
+        this.frameX = 237; //Sprite sheet X position
+        this.frameY = 0; //Sprite sheet Y position
+
+        // Load the image
+        const lImg = new Image();
+        lImg.addEventListener('load', () => {
+            this.lImg = lImg;
+        });
+        lImg.src = './assets/light-sprite-sheet.png';
+        const mImg = new Image();
+        mImg.addEventListener('load', () => {
+            this.mImg = mImg;
+        });
+        mImg.src = './assets/light-multiply-sprite-sheet.png';
+    }
+
+    draw(x, y, toDraw, platerDirection) {
+        this.x = x;
+        this.y = y;
+
+        if (platerDirection === 'left') { // Player holding left
+            this.frameX = 158;
+            this.yPos = this.y - this.height/2 + this.pHeight/2;
+            this.xPos = this.x - this.width + this.pWidth;
+        }
+        if (platerDirection === 'up') { // Player holding up
+            this.frameX = 0;
+            this.yPos = this.y - this.height + this.pHeight;
+            this.xPos = this.x - this.width/2 + this.pWidth/2;
+        }
+        if (platerDirection === 'right') { // Player holding right
+            this.frameX = 237;
+            this.yPos = this.y - this.height/2 + this.pHeight/2;
+            this.xPos = this.x;
+        }
+        if (platerDirection === 'down') { // Player holding down
+            this.frameX = 79;
+            this.yPos = this.y;
+            this.xPos = this.x - this.width/2 + this.pWidth/2;
+        }
+        if (platerDirection === 'leftDown') { // Player holding left and down
+            this.frameX = 553;
+            this.yPos = this.y;
+            this.xPos = this.x - this.width + this.pWidth;
+        }
+        if (platerDirection === 'leftUp') { // Player holding left and up
+            this.frameX = 395;
+            this.yPos = this.y - this.height + this.pHeight;
+            this.xPos = this.x - this.width + this.pWidth;
+        }
+        if (platerDirection === 'rightDown') { // Player holding right and down
+            this.frameX = 474;
+            this.yPos = this.y;
+            this.xPos = this.x;
+        }
+        if (platerDirection === 'rightUp') { // Player holding right and up
+            this.frameX = 316;
+            this.yPos = this.y - this.height + this.pHeight;
+            this.xPos = this.x;
+        }
+
+        if (toDraw === 'light') {
+            this.ctx.drawImage(this.lImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+        } else {
+            this.ctx.drawImage(this.mImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+        }
+
+
+        /* ctx.strokeStyle = '#ffffff';
+        this.ctx.rect(this.xPos, this.yPos, this.width, this.height);
+        this.ctx.stroke();
+
+        this.ctx.rect(this.x, this.y, this.pWidth, this.pHeight);
+        this.ctx.stroke(); */
+    }
+}
+
 class Item {
-    constructor(coordX, coordY, scale) {
+    constructor(coordX, coordY, scale, type) {
         this.width = 32;
         this.height = 32;
         this.coordX = coordX;
@@ -189,16 +297,22 @@ class Item {
         this.yCol = 0;
         this.wCol = 0;
         this.hCol = 0;
+        this.type = type;
 
         const iImg = new Image();
         iImg.addEventListener('load', () => {
             this.iImg = iImg;
         });
-        iImg.src = './../assets/oil-sprite-sheet.png';
+        iImg.src = './assets/items-sprite-sheet.png';
     }
 
-    draw(x, tileX, tileY, ctx) {
-        ctx.drawImage(this.iImg, x, 0, this.width, this.height, tileX, tileY, this.width * this.scale, this.height * this.scale);
+    draw(x, y, tileX, tileY, ctx) {
+
+        if (this.type === 'bed') {
+            ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX - this.width * this.scale * 0.2, tileY - this.width * this.scale * 0.2, this.width * this.scale + this.width * this.scale * 0.4, this.height * this.scale + this.width * this.scale * 0.4);            
+        } else {
+            ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX, tileY, this.width * this.scale, this.height * this.scale);
+        }
 
         this.xCol = tileX + (this.width * this.scale)/3;
         this.yCol = tileY + (this.height * this.scale)/3;

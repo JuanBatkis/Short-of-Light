@@ -9,10 +9,50 @@
     <link rel="shortcut icon" type="image/png" href="./assets/page-icon.png"/>
 </head>
 <body>
-    <!-- <section id="titleScreen">
+    <section id="titleScreen" class="intro">
         <h1>Short of Light</h1>
-    </section> -->
-    <section id="canvasSection">
+        <div id="beginLamp">
+            <img src="./assets/page-icon.png" alt="Oil Lamp">
+            <h5>BEGIN</h5>
+        </div>
+    </section>
+    <section id="introScreen" class="intro hidden">
+        <p>
+            YOU'VE FALLEN INTO A DEEP SLUMBER. A NIGHTMARE FROM WHICH THERE IS SEEMINGLY NO ESCAPE. A SERIES OF STRETCHING HALLWAYS AND CONFUSING ROOMS STAND BETWEEN YOU AND THE LIGHT OF DAY.
+        </p>
+        <p>
+            BUT YOU MUSTN'T LOSE HOPE. FIND THE KEYS TO YOUR INNER STRENGTH AND FIGHT TO WAKE UP AGAIN.
+        </p>
+        <div id="continue">
+            <h5>CONTINUE</h5>
+        </div>
+    </section>
+    <section id="instructions" class="intro hidden">
+        <div class="container">
+            <div class="col-6">
+                <p>USE YOUR ARROW KEYS OR WASD TO MOVE</p>
+            </div>
+            <div class="col-6">
+                <p>YOU'LL ONLY BE ABLE TO SEE IN THE DIRECTION YOU ARE FACING</p>
+            </div>
+            <div class="col-6">
+                <p>YOU MUST FIND 3 KEYS TO UNLOCK YOUR WAY OUT</p>
+            </div>
+            <div class="col-6">
+                <p>ONCE YOU FOUND THEM, RETURN TO WHERE YOU FIRST STARTED TO FINALLY WAKE UP</p>
+            </div>
+            <div class="col-6">
+                <p>WHILE YOU SEARCH, YOU'LL FIND OIL CANISTERS TO REFILL YOUR LAMP</p>
+            </div>
+            <div class="col-6">
+                <p>IF YOUR LAMP RUNS OUT OF OIL, YOU'LL BE TRAPPED IN YOUR NIGHTMARE FOREVER</p>
+            </div>
+        </div>
+        <div id="startGame">
+            <h5>START GAME</h5>
+        </div>
+    </section>
+    <section id="canvasSection" class="intro hidden">
         <div id="playPause" class="play"></div>
         <div id="pauseScreen" class="overlay">
             <h2>ON PAUSE</h2>
@@ -21,6 +61,14 @@
             <h2>YOU COULDN'T WAKE UP</h2>
             <div id="tryAgain">
                 <h5>TRY AGAIN?</h5>
+            </div>
+        </div>
+        <div id="bedTime" class="overlay">
+            <div class="moreAwake">
+                <h2>SUDDENLY, YOU FEEL MORE AWAKE</h2>
+            </div>
+            <div class="findBed">
+                <h2>FIND YOUR BED TO WAKE UP</h2>
             </div>
         </div>
         <div class="oilCont">

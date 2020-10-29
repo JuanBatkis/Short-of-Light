@@ -1,3 +1,20 @@
+const showIntro = function() {
+	document.getElementById('titleScreen').className = 'intro hidden';
+	document.getElementById('introScreen').className = 'intro';
+}
+
+const showInstructions = function() {
+	document.getElementById('introScreen').className = 'intro hidden';
+	document.getElementById('instructions').className = 'intro';
+}
+
+const startGame = function() {
+	document.getElementById('introScreen').className = 'intro hidden';
+	document.getElementById('canvasSection').className = 'intro';
+	gameMusic.play();
+	drawGame();
+}
+
 const playPause = function() {
     if(play) {
 		play = false;
@@ -11,6 +28,28 @@ const playPause = function() {
         document.getElementById('pauseScreen').className = 'overlay';
         requestAnimationFrame(drawGame);
     }
+}
+
+const foundAllKeys = function() {
+	document.getElementById('bedTime').className = 'overlay show';
+	document.querySelector('#bedTime .moreAwake').className = 'moreAwake show';
+
+	setTimeout(() => {
+		document.querySelector('#bedTime .findBed').className = 'findBed show';
+		document.querySelector('#bedTime .moreAwake').className = 'moreAwake hide';
+
+		setTimeout(() => {
+			document.querySelector('#bedTime .findBed').className = 'findBed hide';
+			document.getElementById('bedTime').className = 'overlay';
+
+			setTimeout(() => {
+				document.querySelector('#bedTime .moreAwake').className = 'moreAwake';
+				document.querySelector('#bedTime .findBed').className = 'findBed';
+			}, 2000);
+			
+		}, 3100);
+
+	}, 3100);
 }
 
 const gameOver = function() {
@@ -28,8 +67,13 @@ const restart = function() {
 	document.getElementById('gameOver').className = 'overlay';
 	document.querySelector('#canvasSection #gameOver #tryAgain').className = '';
 	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
-	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000;
-	play = true;
+	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.direction = 'right', player.keysFound = 0;
+	play = true, foundKeys = false;
+	currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
+	allItems = [];
+	map.itemsCoordinates.forEach((element) => {
+		allItems.push(new Item(element.x, element.y, scale, element.type));
+	});
 	requestAnimationFrame(drawGame);
 }
 
@@ -56,17 +100,20 @@ const createMap = function(layer, colide, width, height) {
 	let y_max = Math.ceil((viewport.y + viewport.h) / (tilesize * scale));
 
 	//Draw map
-	for (let x = x_min; x < x_max; x++) { //for (let x = 0; x < mapW; x++) {
+	for (let x = x_min; x < x_max; x++) { //for (let x = 0; x < mapW; x++) { for (let x = x_min; x < x_max; x++) {
 
-		for (let y = y_min; y < y_max; y++) { //for (let y = 0; y < mapH; y++) {
+		for (let y = y_min; y < y_max; y++) { //for (let y = 0; y < mapH; y++) { for (let y = y_min; y < y_max; y++) {
 
 			let value = layer[y * mapW + x] - 1;
 			let tileX = Math.floor(x * tilesize * scale - viewport.x + width * 0.5 - viewport.w * 0.5);// Tile x destination for drawing
 			let tileY = Math.floor(y * tilesize * scale - viewport.y + height * 0.5 - viewport.h * 0.5);// Tile y destination for drawing
 
 			ctx.drawImage(mapTileSheet, value * tilesize, 0, tilesize, tilesize, tileX, tileY, tilesize * scale, tilesize * scale);
+
+			/* ctx.fillStyle = 'green';
+			ctx.fillRect(map.mapBlack.coord.x, map.mapBlack.coord.y, map.mapBlack.size.w * tilesize * scale, map.mapBlack.size.h * tilesize * scale); */
 			
-			if (colide && value !== 0) {
+			if (colide && value !== 0 && value !== -1) {
 				/* ctx.fillStyle = "#ff0000";
 				ctx.textAlign =  "start";
 				ctx.textBaseline = "top"
@@ -89,6 +136,9 @@ const createMap = function(layer, colide, width, height) {
 
 				player.tileCollision(tile, width, height);
 
+			} else if(value === 22) {
+				ctx.fillStyle = '#0F0717';
+				ctx.fillRect(tileX - tilesize * scale * 2, tileY - tilesize * scale * 2, tilesize * scale * 3, tilesize * scale * 3);
 			}
 
 		}
@@ -97,7 +147,7 @@ const createMap = function(layer, colide, width, height) {
 
 }
 
-const placeObjects = function(objects, width, height) {
+const placeObjects = function(objects, width, height, notSheets) {
 	let x_min = Math.floor(viewport.x / (tilesize * scale));
 	let y_min = Math.floor(viewport.y / (tilesize * scale));
 	let x_max = Math.ceil((viewport.x + viewport.w) / (tilesize * scale));
@@ -113,9 +163,22 @@ const placeObjects = function(objects, width, height) {
 			if (x_min <= x && x < x_max && y_min <= y && y < y_max) {
 				let tileX = Math.floor(objects[index].coordX * tilesize * scale - viewport.x + width * 0.5 - viewport.w * 0.5);// Tile x destination for drawing
 				let tileY = Math.floor(objects[index].coordY * tilesize * scale - viewport.y + height * 0.5 - viewport.h * 0.5);// Tile y destination for drawing
-		
-				objects[index].draw((Math.round((totalFrames/8)%9)) * 32,tileX , tileY, ctx);			
-				player.objectCollision(objects, index, width, height);
+
+				if (notSheets) {
+					if (objects[index].type === 'bed' && foundKeys) {
+						objects[index].draw(0, 32,tileX , tileY, ctx);
+					} else if (objects[index].type === 'key') {
+						objects[index].draw((Math.round((totalFrames/16)%3)) * 32, 64,tileX , tileY, ctx);
+					} else if (objects[index].type === 'oil') {
+						objects[index].draw((Math.round((totalFrames/8)%9)) * 32, 0,tileX , tileY, ctx);
+					}
+	
+					player.objectCollision(objects, index, width, height);					
+				} else if (objects[index].type === 'bed' && foundKeys) {
+					objects[index].draw(32, 32,tileX , tileY, ctx);
+				}
+
+
 			}
 
 		}
