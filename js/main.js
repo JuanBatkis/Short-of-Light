@@ -77,8 +77,15 @@ window.onload = function() {
 	document.getElementById('playPause').onclick = () => {
 		playPause();
 	};
+	document.getElementById('soundMute').onclick = () => {
+		soundMute();
+	};
 
+	//restarts game on try or play again
 	document.getElementById('tryAgain').onclick = () => {
+		restart();
+	};
+	document.getElementById('playAgain').onclick = () => {
 		restart();
 	};
 	
@@ -87,8 +94,12 @@ window.onload = function() {
             keysDown[e.keyCode] = true;
 		}
 		
-		if (e.keyCode === 27) {
+		if (e.keyCode === 27) { //pause game on ESC
 			playPause();
+		} else if (e.keyCode === 75) { //get all keys with K
+			player.keysFound = map.keys;
+		} else if (e.keyCode === 79) { //empty oil with O
+			player.oil = 10;
 		}
     };
 
@@ -126,21 +137,29 @@ const drawGame = function() {
 	}
 	totalFrames ++
 	
-	//Deplete oil left based on difficulty
-	player.oil -= 0.1 * difficulty;
+	//Deplete oil left based on difficulty. Pause once the player won
+	if (!player.won) {
+		player.oil -= 0.1 * difficulty;		
+	}
 	oilJar.style.height = (player.oil/10).toFixed(1) + '%';
+
+
+	//If the player has found all keys, the bed appears
+	if (player.keysFound >= map.keys && !foundKeys) {
+		foundKeys = true;
+		foundAllKeys();
+	}
+
+	//If the player reaches the bed, the game is won
+	if (player.won) {
+		wakeUp();
+	}
 
 	//If the player runs out of oil, game over
 	if (player.oil <= 0) {
 		gameOver();
 	}
-
-	if (player.keysFound >= map.keys && !foundKeys) {
-		foundKeys = true;
-		foundAllKeys();
-		console.log('bed time');
-	}
-
+	
 	//Update buttons status
 	update();
 

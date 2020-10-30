@@ -23,11 +23,25 @@ const playPause = function() {
         document.getElementById('pauseScreen').className = 'overlay show';
     } else {
 		play = true;
-		gameMusic.play();
+		if (!gameMusic.mute) {
+			gameMusic.play();
+		}
         document.getElementById('playPause').className = 'play';
         document.getElementById('pauseScreen').className = 'overlay';
         requestAnimationFrame(drawGame);
     }
+}
+
+const soundMute = function() {
+	if (!gameMusic.mute) {
+		gameMusic.stop();
+		document.getElementById('soundMute').className = 'mute';
+		gameMusic.mute = true;
+	} else {
+		gameMusic.play();
+		document.getElementById('soundMute').className = 'sound';
+		gameMusic.mute = false;
+	}
 }
 
 const foundAllKeys = function() {
@@ -52,6 +66,40 @@ const foundAllKeys = function() {
 	}, 3100);
 }
 
+const wakeUp = function() {
+	setTimeout(() => {
+		play = false;
+		document.querySelector('#winScreen .winOverlay').className = 'winOverlay day';
+
+		let music = document.getElementById('music');
+		let counter = 1;
+
+		let checkVol = function () {
+			counter -= 0.1;
+			if (counter > 0) {
+				music.volume = counter;
+			} else {
+				music.volume = 0;
+				clearInterval(lowerVol);
+			}			
+		}
+
+		var lowerVol = setInterval(checkVol , 600);
+
+		setTimeout(() => {
+			document.querySelector('#winScreen .winOverlay').className = 'winOverlay';
+			document.querySelector('#winScreen .winImage').style.display = 'block';
+
+			setTimeout(() => {
+				document.querySelector('#winScreen .winImage').className = 'winImage open';
+				document.querySelector('#winScreen .winImage #playAgain').className = 'show';
+			}, 2500);
+
+		}, 8000)
+
+	}, 1000);
+}
+
 const gameOver = function() {
 	play = false;
 	player.velocity_x = 0, player.velocity_y = 0;
@@ -67,7 +115,11 @@ const restart = function() {
 	document.getElementById('gameOver').className = 'overlay';
 	document.querySelector('#canvasSection #gameOver #tryAgain').className = '';
 	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
-	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.direction = 'right', player.keysFound = 0;
+	document.querySelector('#winScreen .winImage').style.display = 'none';
+	document.querySelector('#winScreen .winImage').className = 'winImage';
+	document.querySelector('#winScreen .winImage #playAgain').className = '';
+	music = document.getElementById('music').volume = 1;
+	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false;
 	play = true, foundKeys = false;
 	currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
 	allItems = [];
@@ -173,9 +225,13 @@ const sound = function(src, loop) {
     this.sound.src = src;
     this.sound.setAttribute("preload", "auto");
 	this.sound.setAttribute("controls", "none");
+	if (loop) {
+		this.sound.setAttribute("id", "music");
+	}
 	this.sound.loop = loop;
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
+	this.mute = false;
     this.play = function(){
         this.sound.play();
     }

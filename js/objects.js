@@ -30,6 +30,7 @@ class Character {
         this.frameY = 0; //Sprite sheet Y position
         this.direction = 'right';
         this.keysFound = 0;
+        this.won = false;
 
         // Load the image
         const cImg = new Image();
@@ -120,9 +121,8 @@ class Character {
         // If the player and the object are less than the half width or half height, then we must be inside the object, causing a collision
         if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
             if (objects[index].type === 'bed') {
-                console.log('win!');
+                this.won = true;
             } else if (objects[index].type === 'key') {
-                console.log('key');
                 this.keysFound++;
                 delete objects[index];
             } else if (objects[index].type === 'oil') {

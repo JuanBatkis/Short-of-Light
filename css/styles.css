@@ -160,7 +160,7 @@ section.hidden {
     position: relative;
 }
 
-#canvasSection #playPause {
+#canvasSection #playPause, #canvasSection #soundMute {
     position: absolute;
     left: 10px;
     top: 10px;
@@ -169,6 +169,9 @@ section.hidden {
     cursor: pointer;
     z-index: 2;
 }
+#canvasSection #soundMute {
+    left: 62px;
+}
 
 #canvasSection #playPause.play {
     background-image: url('./../assets/pause.png');
@@ -176,6 +179,14 @@ section.hidden {
 
 #canvasSection #playPause.pause {
     background-image: url('./../assets/play.png');
+}
+
+#canvasSection #soundMute.sound {
+    background-image: url('./../assets/sound.png');
+}
+
+#canvasSection #soundMute.mute {
+    background-image: url('./../assets/mute.png');
 }
 
 #canvasSection .overlay {
@@ -288,4 +299,73 @@ section.hidden {
 #canvasSection canvas {
     /*border: 1px solid red;*/
     background-color: var(--dark-col);
+}
+
+#winScreen {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#winScreen .winOverlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark-col);
+    opacity: 0;
+    transition: opacity 3s 0s, background-color 3s 4s ease-in;
+}
+
+#winScreen .winOverlay.day {
+    transition: opacity 2s 0s, background-color 3s 4s ease-in;
+    opacity: 1;
+    background-color: #fff86a;
+}
+
+#winScreen .winImage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('./../assets/win-screen-eyes-closed.png'), url('./../assets/win-screen.png');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    image-rendering: pixelated;
+    display: none;
+}
+
+#winScreen .winImage.open {
+    background: url('./../assets/win-screen.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#winScreen .winImage #playAgain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 25px;
+    cursor: pointer;
+    pointer-events: all;
+    padding: 14px;
+    background-image: url('./../assets/game-over-border.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    opacity: 0;
+    transition: margin 1s, opacity 1s, transform .5s;
+}
+
+#winScreen .winImage #playAgain.show {
+    opacity: 1;
+    margin-top: 0px;
+}
+
+#winScreen .winImage #playAgain:hover {
+    transform: translate(-50%, -50%) scale(1.06);
 }
