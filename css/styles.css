@@ -369,3 +369,7 @@ section.hidden {
 #winScreen .winImage #playAgain:hover {
     transform: translate(-50%, -50%) scale(1.06);
 }
+
+#winScreen .winImage #playAgain h5 {
+    font-size: 1.2em;
+}

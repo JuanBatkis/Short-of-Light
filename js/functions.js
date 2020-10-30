@@ -84,7 +84,7 @@ const wakeUp = function() {
 			}			
 		}
 
-		var lowerVol = setInterval(checkVol , 600);
+		var lowerVol = setInterval(checkVol , 650);
 
 		setTimeout(() => {
 			document.querySelector('#winScreen .winOverlay').className = 'winOverlay';
