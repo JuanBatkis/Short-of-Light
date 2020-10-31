@@ -10,14 +10,14 @@ const levels = [
         width: 40,
         spawnX: 64,
 		spawnY: 64,
-		keys: 4,
-		oil: 4,
+		keys: 3,
+		oil: 3,
 		itemsCoordinates: [
-			{type: 'oil', x: 2, y: 1},
+			/* {type: 'oil', x: 4, y: 1}, */
 			{type: 'oil', x: 12, y: 5},
 			{type: 'oil', x: 36, y: 8},
 			{type: 'oil', x: 3, y: 15},
-			{type: 'key', x: 4, y: 2},
+			/* {type: 'key', x: 4, y: 2}, */
 			{type: 'key', x: 33, y: 8},
 			{type: 'key', x: 14, y: 22},
 			{type: 'key', x: 37, y: 23},

@@ -37,7 +37,7 @@ class Character {
         cImg.addEventListener('load', () => {
             this.cImg = cImg;
         });
-        cImg.src = './assets/character-sprite-sheet-2.png';
+        cImg.src = './assets/character-sprite-sheet.png';
     }
 
     moveLeft() {
@@ -124,6 +124,7 @@ class Character {
                 this.won = true;
             } else if (objects[index].type === 'key') {
                 this.keysFound++;
+                shadowSound.play();
                 delete objects[index];
             } else if (objects[index].type === 'oil') {
                 this.oil = 1000;
@@ -182,7 +183,9 @@ class Character {
             this.frameX = (Math.round(this.frame%9)) * 32;
         }
 
-        this.ctx.drawImage(this.cImg, this.frameX, this.frameY, 32, 31.99, x - 1*this.scale, y, this.width, this.height);
+        if (this.cImg !== undefined) {
+            this.ctx.drawImage(this.cImg, this.frameX, this.frameY, 32, 31.99, x - 1*this.scale, y, this.width, this.height);
+        }
 
     }
 
@@ -262,9 +265,13 @@ class Light {
         }
 
         if (toDraw === 'light') {
-            this.ctx.drawImage(this.lImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+            if (this.lImg !== undefined) {
+                this.ctx.drawImage(this.lImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+            }
         } else {
-            this.ctx.drawImage(this.mImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+            if (this.mImg !== undefined) {
+                this.ctx.drawImage(this.mImg,this.frameX, this.frameY, 79, 79, this.xPos - 1*this.scale, this.yPos, this.width, this.height);
+            }
         }
 
     }
@@ -292,10 +299,12 @@ class Item {
 
     draw(x, y, tileX, tileY, ctx) {
 
-        if (this.type === 'bed') {
-            ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX - this.width * this.scale * 0.2, tileY - this.width * this.scale * 0.2, this.width * this.scale + this.width * this.scale * 0.4, this.height * this.scale + this.width * this.scale * 0.4);            
-        } else {
-            ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX, tileY, this.width * this.scale, this.height * this.scale);
+        if (this.iImg !== undefined) {
+            if (this.type === 'bed') {
+                ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX - this.width * this.scale * 0.2, tileY - this.width * this.scale * 0.2, this.width * this.scale + this.width * this.scale * 0.4, this.height * this.scale + this.width * this.scale * 0.4);            
+            } else {            
+                ctx.drawImage(this.iImg, x, y, this.width, this.height, tileX, tileY, this.width * this.scale, this.height * this.scale);                
+            }
         }
 
         this.xCol = tileX + (this.width * this.scale)/3;

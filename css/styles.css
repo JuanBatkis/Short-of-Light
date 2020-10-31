@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, span {
     font-family: 'Press Start 2P', cursive;
 }
 
@@ -125,20 +125,86 @@ section.hidden {
 #instructions .container {
     display: flex;
     flex-wrap: wrap;
-    max-width: 1000px;
+    width: 95%;
     border: 2px solid #ffffff80;
 }
 
 #instructions .container .col-6 {
-    width: 50%;
+    width: calc(100% / 3);
     padding: 12px 12px 12px 12px;
     box-sizing: border-box;
-    border: 2px solid #ffffff80;
+    border: 2px solid #8d8695;
+    box-shadow: 0 0 0 1px #8d8695;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #instructions .container .col-6 p {
     text-align: center;
     line-height: 1.6em;
+}
+
+#instructions .container .col-6 img {
+    width: 105px;
+    image-rendering: pixelated;
+}
+
+#instructions .container .col-6 .movementContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+
+#instructions .container .col-6 .movementContainer > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#instructions .container .col-6 .movementContainer > div > div {
+    display: flex;
+    justify-content: center;
+}
+
+#instructions .container .col-6 .movementContainer > div > div > span {
+    border: 2px solid #fff;
+    padding: 2px;
+    display: inline-block;
+    font-size: 1.6em;
+}
+
+#instructions .container .col-6 .movementContainer .arrows .up {
+    width: 100%;
+}
+
+#instructions .container .col-6 .movementContainer .arrows .up span {
+    transform: rotate(90deg);
+}
+
+#instructions .container .col-6 .movementContainer .arrows .down span {
+    transform: rotate(-90deg) scaleY(-1);
+}
+
+#instructions .container .col-6 .movementContainer .wasd .up {
+    width: 100%;
+}
+
+#instructions .container .col-6 .tutMeter {
+    width: 20px;
+    height: 85px;
+    border: 2px solid;
+    margin-bottom: 10px;
+    padding: 2px;
+    box-sizing: border-box;
+    transform: rotate(180deg);
+}
+
+#instructions .container .col-6 .tutMeter .tutOil {
+    height: 15%;
+    width: 100%;
+    background-color: #fbd64e;
 }
 
 #instructions #startGame {
@@ -308,6 +374,11 @@ section.hidden {
     height: 100%;
     pointer-events: none;
     z-index: 2;
+}
+
+#winScreen.hide {
+    transition: opacity 1s;
+    opacity: 0;
 }
 
 #winScreen .winOverlay {

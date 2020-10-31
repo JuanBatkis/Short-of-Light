@@ -21,7 +21,7 @@
             YOU'VE FALLEN INTO A DEEP SLUMBER. A NIGHTMARE FROM WHICH THERE IS SEEMINGLY NO ESCAPE. A SERIES OF STRETCHING HALLWAYS AND CONFUSING ROOMS STAND BETWEEN YOU AND THE LIGHT OF DAY.
         </p>
         <p>
-            BUT YOU MUSTN'T LOSE HOPE. FIND THE KEYS TO YOUR INNER STRENGTH AND FIGHT TO WAKE UP AGAIN.
+            BUT YOU MUSTN'T LOSE HOPE. CONFRONT YOUR SHADOWS, FIND YOUR INNER STRENGTH AND FIGHT TO WAKE UP AGAIN.
         </p>
         <div id="continue">
             <h5>CONTINUE</h5>
@@ -30,21 +30,42 @@
     <section id="instructions" class="intro hidden">
         <div class="container">
             <div class="col-6">
-                <p>USE YOUR ARROW KEYS OR WASD TO MOVE</p>
+                <div class="movementContainer">
+                    <div class="arrows">
+                        <div class="up"><span><</span></div>
+                        <div class="left"><span><</span></div>
+                        <div class="down"><span><</span></div>
+                        <div class="right"><span>></span></div>
+                    </div>
+                    <div class="wasd">
+                        <div class="up"><span>W</span></div>
+                        <div class="left"><span>A</span></div>
+                        <div class="down"><span>S</span></div>
+                        <div class="right"><span>D</span></div>
+                    </div>
+                </div>
+                <p>USE YOUR ARROW OR WASD KEYS TO MOVE AROUND THE MAP. ESC TO PAUSE</p>
             </div>
             <div class="col-6">
+                <img src="./assets/oil-lamp.png" alt="Oil Lamp">
                 <p>YOU'LL ONLY BE ABLE TO SEE IN THE DIRECTION YOU ARE FACING</p>
             </div>
             <div class="col-6">
-                <p>YOU MUST FIND 3 KEYS TO UNLOCK YOUR WAY OUT</p>
+                <img src="./assets/shadow.png" alt="Shadow">
+                <p>YOU MUST FIND AND CONFRONT YOUR SHADOWS TO UNLOCK YOUR WAY OUT</p>
             </div>
             <div class="col-6">
+                <img src="./assets/bed.png" alt="Bed">
                 <p>ONCE YOU FOUND THEM, RETURN TO WHERE YOU FIRST STARTED TO FINALLY WAKE UP</p>
             </div>
             <div class="col-6">
+                <img src="./assets/oil.png" alt="Oil">
                 <p>WHILE YOU SEARCH, YOU'LL FIND OIL CANISTERS TO REFILL YOUR LAMP</p>
             </div>
             <div class="col-6">
+                <div class="tutMeter">
+                    <div class="tutOil"></div>
+                </div>
                 <p>IF YOUR LAMP RUNS OUT OF OIL, YOU'LL BE TRAPPED IN YOUR NIGHTMARE FOREVER</p>
             </div>
         </div>

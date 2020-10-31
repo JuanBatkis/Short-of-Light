@@ -6,8 +6,10 @@ let myGameArea = {
         this.context = this.canvas.getContext("2d");
 		document.getElementById('canvasSection').appendChild(this.canvas);
 		
-		oilSound = new sound('./assets/oil.mp3', false);
-		gameMusic = new sound('./assets/game-loop.mp3', true);
+		oilSound = new sound('./assets/oil.mp3', 'oilSound', false);
+		shadowSound = new sound('./assets/shadow.mp3', 'shadowSound', false);
+		morningBirds = new sound('./assets/morning-birds.mp3', 'morningBirds', true);
+		gameMusic = new sound('./assets/game-loop.mp3', 'gameMusic', true);
 		gameMusic.stop();
     },
 };
@@ -96,7 +98,9 @@ window.onload = function() {
 		
 		if (e.keyCode === 27) { //pause game on ESC
 			playPause();
-		} else if (e.keyCode === 75) { //get all keys with K
+		} else if (e.keyCode === 73) { //change player speed with I
+			(player.speed === 0.7) ? player.speed = 2.5 : player.speed = 0.7;
+		}else if (e.keyCode === 75) { //get all keys with K
 			player.keysFound = map.keys;
 		} else if (e.keyCode === 79) { //empty oil with O
 			player.oil = 10;

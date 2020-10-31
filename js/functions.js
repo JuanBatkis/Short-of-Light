@@ -71,7 +71,8 @@ const wakeUp = function() {
 		play = false;
 		document.querySelector('#winScreen .winOverlay').className = 'winOverlay day';
 
-		let music = document.getElementById('music');
+		let music = document.getElementById('gameMusic');
+
 		let counter = 1;
 
 		let checkVol = function () {
@@ -80,6 +81,7 @@ const wakeUp = function() {
 				music.volume = counter;
 			} else {
 				music.volume = 0;
+				morningBirds.play();
 				clearInterval(lowerVol);
 			}			
 		}
@@ -115,11 +117,17 @@ const restart = function() {
 	document.getElementById('gameOver').className = 'overlay';
 	document.querySelector('#canvasSection #gameOver #tryAgain').className = '';
 	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
-	document.querySelector('#winScreen .winImage').style.display = 'none';
-	document.querySelector('#winScreen .winImage').className = 'winImage';
-	document.querySelector('#winScreen .winImage #playAgain').className = '';
-	music = document.getElementById('music').volume = 1;
-	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false;
+	document.getElementById('winScreen').className = 'hide';
+	setTimeout(() => {
+		document.querySelector('#winScreen .winImage').style.display = 'none';
+		document.querySelector('#winScreen .winImage').className = 'winImage';
+		document.querySelector('#winScreen .winImage #playAgain').className = '';
+		document.getElementById('winScreen').className = '';
+	}, 1000);
+
+	morningBirds.stop();
+	music = document.getElementById('gameMusic').volume = 1;
+	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false, player.speed = 0.7;
 	play = true, foundKeys = false;
 	currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
 	allItems = [];
@@ -202,7 +210,7 @@ const placeObjects = function(objects, width, height, notSheets) {
 					if (objects[index].type === 'bed' && foundKeys) {
 						objects[index].draw(0, 32,tileX , tileY, ctx);
 					} else if (objects[index].type === 'key') {
-						objects[index].draw((Math.round((totalFrames/16)%3)) * 32, 64,tileX , tileY, ctx);
+						objects[index].draw((Math.round((totalFrames/24)%9)) * 32, 64,tileX , tileY, ctx);
 					} else if (objects[index].type === 'oil') {
 						objects[index].draw((Math.round((totalFrames/8)%9)) * 32, 0,tileX , tileY, ctx);
 					}
@@ -220,14 +228,12 @@ const placeObjects = function(objects, width, height, notSheets) {
 	}
 }
 
-const sound = function(src, loop) {
+const sound = function(src, id, loop) {
 	this.sound = document.createElement("audio");
     this.sound.src = src;
     this.sound.setAttribute("preload", "auto");
 	this.sound.setAttribute("controls", "none");
-	if (loop) {
-		this.sound.setAttribute("id", "music");
-	}
+	this.sound.setAttribute("id", id);
 	this.sound.loop = loop;
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
