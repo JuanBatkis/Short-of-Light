@@ -8,9 +8,44 @@ const showInstructions = function() {
 	document.getElementById('instructions').className = 'intro';
 }
 
-const startGame = function() {
+const showLevelSelector = function() {
+	document.getElementById('instructions').className = 'intro hidden';
+	document.getElementById('levelSelection').className = 'intro';
+}
+
+const selectLevel = function (id) {
+	document.getElementById('startGame').className = id;
+	const levels = document.querySelectorAll('#levelSelection .col-6');
+	levels.forEach(element => {
+		element.className = 'col-6';
+	});
+	document.getElementById(id).className = 'col-6 selected';
+}
+
+const startGame = function(level) {
 	document.getElementById('introScreen').className = 'intro hidden';
 	document.getElementById('canvasSection').className = 'intro';
+
+	switch (level) {
+		case 'level-1':
+			map = levels[0];
+			break;
+		case 'level-2':
+			map = levels[1];
+			break;
+		case 'level-3':
+			map = levels[2];
+			break;
+	}
+
+	mapW = map.width;
+	mapH = map.height;
+	allItems = [];
+	map.itemsCoordinates.forEach((element) => {
+		allItems.push(new Item(element.x, element.y, scale, element.type));
+	});
+
+	music = document.getElementById('gameMusic').volume = 1;
 	gameMusic.play();
 	drawGame();
 }
@@ -95,6 +130,10 @@ const wakeUp = function() {
 			setTimeout(() => {
 				document.querySelector('#winScreen .winImage').className = 'winImage open';
 				document.querySelector('#winScreen .winImage #playAgain').className = 'show';
+
+				setTimeout(() => {
+					document.querySelector('#winScreen .winImage #levelReSelect').className = 'show';
+				}, 1000);
 			}, 2500);
 
 		}, 8000)
@@ -122,6 +161,7 @@ const restart = function() {
 		document.querySelector('#winScreen .winImage').style.display = 'none';
 		document.querySelector('#winScreen .winImage').className = 'winImage';
 		document.querySelector('#winScreen .winImage #playAgain').className = '';
+		document.querySelector('#winScreen .winImage #levelReSelect').className = '';
 		document.getElementById('winScreen').className = '';
 	}, 1000);
 
@@ -135,6 +175,30 @@ const restart = function() {
 		allItems.push(new Item(element.x, element.y, scale, element.type));
 	});
 	requestAnimationFrame(drawGame);
+}
+
+const changeLevel = function() {
+	document.getElementById('gameOver').className = 'overlay';
+	document.querySelector('#canvasSection #gameOver #tryAgain').className = '';
+	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
+	document.getElementById('winScreen').className = 'hide';
+	document.getElementById('canvasSection').className = 'intro hidden';
+	setTimeout(() => {
+		document.querySelector('#winScreen .winImage').style.display = 'none';
+		document.querySelector('#winScreen .winImage').className = 'winImage';
+		document.querySelector('#winScreen .winImage #playAgain').className = '';
+		document.querySelector('#winScreen .winImage #levelReSelect').className = '';
+		document.getElementById('winScreen').className = '';
+
+		document.getElementById('instructions').className = 'intro hidden';
+		document.getElementById('levelSelection').className = 'intro';
+	}, 1000);
+
+	morningBirds.stop();
+	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false, player.speed = 0.7;
+	play = true, foundKeys = false;
+	currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
+	allItems = [];
 }
 
 const update = function (modifier) {

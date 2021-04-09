@@ -207,7 +207,7 @@ section.hidden {
     background-color: #fbd64e;
 }
 
-#instructions #startGame {
+#instructions #levelSelect {
     margin-top: 25px;
     cursor: pointer;
     padding: 14px 26px;
@@ -218,8 +218,103 @@ section.hidden {
     transition: transform .5s;
 }
 
-#instructions #startGame:hover {
+#instructions #levelSelect:hover {
     transform: scale(1.06);
+}
+
+#levelSelection .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+    border: 2px solid #ffffff80;
+}
+
+#levelSelection .container .col-6 {
+    width: calc(100% / 3);
+    padding: 12px 12px 12px 12px;
+    box-sizing: border-box;
+    border: 2px solid #8d8695;
+    box-shadow: 0 0 0 1px #8d8695;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow .5s;
+}
+
+#levelSelection .container .col-6.selected {
+    box-shadow: 0 0 0 1px #8d8695, inset 0 0 0 4px #fff;
+}
+
+#levelSelection .container .col-6 p {
+    text-align: center;
+    line-height: 1.6em;
+    font-size: 1.1em;
+}
+
+#levelSelection .container .col-6 img {
+    width: 80%;
+    image-rendering: pixelated;
+    transition: transform .5s;
+}
+
+#levelSelection .container .col-6:hover img {
+    transform: scale(1.1);
+}
+
+#levelSelection .container .col-6 .description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0f07177c;
+    opacity: 0;
+    transition: opacity .5s, box-shadow .5s;
+}
+
+#levelSelection .container .col-6.selected .description {
+    box-shadow: 0 0 0 1px #8d8695, inset 0 0 0 4px #fff;
+}
+
+#levelSelection .container .col-6:hover .description {
+    opacity: 1;
+}
+
+#levelSelection .container .col-6 .description p {
+    font-size: 0.9em;
+}
+
+#levelSelection #startGame {
+    margin-top: 25px;
+    cursor: pointer;
+    padding: 14px 26px;
+    background-image: url('./../assets/game-over-border.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    transition: transform .5s, opacity .5s;
+}
+
+#levelSelection #startGame.disabled {
+    opacity: .4;
+    pointer-events: none;
+}
+
+#levelSelection #startGame:hover {
+    transform: scale(1.06);
+}
+
+#levelSelection #startGame h5 {
+    pointer-events: none;
 }
 
 #canvasSection {
@@ -415,9 +510,9 @@ section.hidden {
     background-repeat: no-repeat;
 }
 
-#winScreen .winImage #playAgain {
+#winScreen .winImage #playAgain, #winScreen .winImage #levelReSelect {
     position: absolute;
-    top: 50%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 25px;
@@ -432,7 +527,12 @@ section.hidden {
     transition: margin 1s, opacity 1s, transform .5s;
 }
 
-#winScreen .winImage #playAgain.show {
+#winScreen .winImage #levelReSelect {
+    top: 58%;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+#winScreen .winImage #playAgain.show, #winScreen .winImage #levelReSelect.show {
     opacity: 1;
     margin-top: 0px;
 }
@@ -441,6 +541,10 @@ section.hidden {
     transform: translate(-50%, -50%) scale(1.06);
 }
 
-#winScreen .winImage #playAgain h5 {
+#winScreen .winImage #levelReSelect:hover {
+    transform: translate(-50%, -50%) scale(0.86);
+}
+
+#winScreen .winImage #playAgain h5, #winScreen .winImage #levelReSelect h5 {
     font-size: 1.2em;
 }

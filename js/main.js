@@ -16,7 +16,7 @@ let myGameArea = {
 
 myGameArea.start();
 
-const map = levels[0];
+let map = levels[0];
 
 let ctx = null, mapW = map.width, mapH = map.height, scale = 3, level = 0, difficulty = 2, play = true, foundKeys = false;
 
@@ -61,8 +61,12 @@ window.onload = function() {
 		showInstructions();
 	};
 
-	document.getElementById('startGame').onclick = () => {
-		startGame();
+	document.getElementById('levelSelect').onclick = () => {
+		showLevelSelector();
+	};
+
+	document.getElementById('startGame').onclick = (e) => {
+		startGame(e.target.className);
 	};
 
 	//Game starts
@@ -89,6 +93,9 @@ window.onload = function() {
 	};
 	document.getElementById('playAgain').onclick = () => {
 		restart();
+	};
+	document.getElementById('levelReSelect').onclick = () => {
+		changeLevel();
 	};
 	
 	document.onkeydown = function(e) {

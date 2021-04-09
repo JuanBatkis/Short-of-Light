@@ -69,7 +69,47 @@
                 <p>IF YOUR LAMP RUNS OUT OF OIL, YOU'LL BE TRAPPED IN YOUR NIGHTMARE FOREVER</p>
             </div>
         </div>
-        <div id="startGame">
+        <div id="levelSelect">
+            <h5>SELECT LEVEL</h5>
+        </div>
+    </section>
+    <section id="levelSelection" class="intro hidden">
+        <div class="container">
+            <div id="level-1" onclick="selectLevel(this.id)" class="col-6">
+                <img src="./assets/level-1.png" alt="Level 1">
+                <p>EASY</p>
+                <div class="description">
+                    <p>3 SHADOWS,</p>
+                    <p>3 OIL CANISTERS,</p>
+                    <p>FEWER PATHS PATHS</p>
+                    <p>AND SMALLER ROOMS</p>
+                    <p>STAND BEFORE YOU AND WAKING UP</p>
+                </div>
+            </div>
+            <div id="level-2" onclick="selectLevel(this.id)" class="col-6">
+                <img src="./assets/level-2.png" alt="Level 2">
+                <p>NORMAL</p>
+                <div class="description">
+                    <p>4 SHADOWS,</p>
+                    <p>4 OIL CANISTERS,</p>
+                    <p>FURTHER STRETCHING HALLWAYS</p>
+                    <p>AND LARGER ROOMS</p>
+                    <p>STAND BEFORE YOU AND WAKING UP</p>
+                </div>
+            </div>
+            <div id="level-3" onclick="selectLevel(this.id)" class="col-6">
+                <img src="./assets/level-3.png" alt="Level 3">
+                <p>HARD</p>
+                <div class="description">
+                    <p>5 SHADOWS,</p>
+                    <p>5 OIL CANISTERS,</p>
+                    <p>SEEMINGLY NEVER ENDING PATHS</p>
+                    <p>AND IMMENSE ROOMS</p>
+                    <p>STAND BEFORE YOU AND WAKING UP</p>
+                </div>
+            </div>
+        </div>
+        <div id="startGame" class="disabled">
             <h5>START GAME</h5>
         </div>
     </section>
@@ -104,6 +144,9 @@
         <div class="winImage">
             <div id="playAgain">
                 <h5>SLEEP AGAIN?</h5>
+            </div>
+            <div id="levelReSelect">
+                <h5>SELECT LEVEL</h5>
             </div>
         </div>
         <div class="winOverlay"></div>
