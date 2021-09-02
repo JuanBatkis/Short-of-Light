@@ -44,6 +44,7 @@ const startGame = function(level) {
 	map.itemsCoordinates.forEach((element) => {
 		allItems.push(new Item(element.x, element.y, scale, element.type));
 	});
+	player.light = true;
 
 	music = document.getElementById('gameMusic').volume = 1;
 	gameMusic.play();
@@ -56,6 +57,7 @@ const playPause = function() {
 		gameMusic.stop();
         document.getElementById('playPause').className = 'pause';
         document.getElementById('pauseScreen').className = 'overlay show';
+		document.getElementById('exit').className = 'exitShow';
     } else {
 		play = true;
 		if (!gameMusic.mute) {
@@ -63,6 +65,7 @@ const playPause = function() {
 		}
         document.getElementById('playPause').className = 'play';
         document.getElementById('pauseScreen').className = 'overlay';
+		document.getElementById('exit').className = 'exitHide';
         requestAnimationFrame(drawGame);
     }
 }
@@ -167,7 +170,7 @@ const restart = function() {
 
 	morningBirds.stop();
 	music = document.getElementById('gameMusic').volume = 1;
-	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false, player.speed = 0.7;
+	player.x = map.spawnX * scale, player.y = map.spawnY * scale, player.oil = 1000, player.light = true, player.frameY = 0, player.direction = 'right', player.keysFound = 0, player.won = false, player.speed = 0.7;
 	play = true, foundKeys = false;
 	currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
 	allItems = [];
@@ -183,6 +186,9 @@ const changeLevel = function() {
 	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
 	document.getElementById('winScreen').className = 'hide';
 	document.getElementById('canvasSection').className = 'intro hidden';
+	document.getElementById('playPause').className = 'play';
+    document.getElementById('pauseScreen').className = 'overlay';
+	document.getElementById('exit').className = 'exitHide';
 	setTimeout(() => {
 		document.querySelector('#winScreen .winImage').style.display = 'none';
 		document.querySelector('#winScreen .winImage').className = 'winImage';

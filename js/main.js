@@ -97,6 +97,9 @@ window.onload = function() {
 	document.getElementById('levelReSelect').onclick = () => {
 		changeLevel();
 	};
+	document.getElementById('exit').onclick = () => {
+		changeLevel();
+	};
 	
 	document.onkeydown = function(e) {
         if(keys.includes(e.keyCode)) {
@@ -107,16 +110,18 @@ window.onload = function() {
 			playPause();
 		} else if (e.keyCode === 73) { //change player speed with I
 			(player.speed === 0.7) ? player.speed = 2.5 : player.speed = 0.7;
-		}else if (e.keyCode === 75) { //get all keys with K
+		} else if (e.keyCode === 75) { //get all keys with K
 			player.keysFound = map.keys;
 		} else if (e.keyCode === 79) { //empty oil with O
 			player.oil = 10;
+		} else if (e.keyCode === 76) { //toggle light with L
+			(player.light) ? player.light = false : player.light = true;
 		}
     };
 
     document.onkeyup = function(e) {
 		if(keys.includes(e.keyCode)) {
-            keysDown[e.keyCode] = false;
+        	keysDown[e.keyCode] = false;
         }
 	};
 
@@ -196,17 +201,19 @@ const drawGame = function() {
 	ctx.fillStyle = '#ff0000';
 	ctx.fillText('FPS: ' + framesLastSecond, 10, 60);
 	
-	//Draw light beam
-	ctx.save();
-	ctx.globalCompositeOperation = "multiply";
-	light.draw(width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5,'multiply', player.direction);
-	ctx.restore();
-
-	//Draw light shine
-	ctx.save();
-	ctx.globalCompositeOperation = "destination-in";
-	light.draw(width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5,'light', keysDown, player.direction);
-	ctx.restore();
+	if (player.light) {
+		//Draw light beam
+		ctx.save();
+		ctx.globalCompositeOperation = "multiply";
+		light.draw(width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5,'multiply', player.direction);
+		ctx.restore();
+	
+		//Draw light shine
+		ctx.save();
+		ctx.globalCompositeOperation = "destination-in";
+		light.draw(width * 0.5 - player.width * 0.5, height * 0.5 - player.height * 0.5,'light', keysDown, player.direction);
+		ctx.restore();
+	}
 
 	if(play) requestAnimationFrame(drawGame);
 

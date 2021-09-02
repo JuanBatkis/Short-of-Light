@@ -25,6 +25,7 @@ class Character {
         this.friction = 0.8;
         this.ctx = null; //Later asigned in main.js
         this.oil = 1000;
+        this.light = true;
         this.frame = 0;
         this.frameX = 0; //Sprite sheet X position
         this.frameY = 0; //Sprite sheet Y position

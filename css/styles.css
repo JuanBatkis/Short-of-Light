@@ -321,7 +321,7 @@ section.hidden {
     position: relative;
 }
 
-#canvasSection #playPause, #canvasSection #soundMute {
+#canvasSection #playPause, #canvasSection #soundMute, #canvasSection #exit {
     position: absolute;
     left: 10px;
     top: 10px;
@@ -332,6 +332,9 @@ section.hidden {
 }
 #canvasSection #soundMute {
     left: 62px;
+}
+#canvasSection #exit {
+    left: 108px;
 }
 
 #canvasSection #playPause.play {
@@ -348,6 +351,17 @@ section.hidden {
 
 #canvasSection #soundMute.mute {
     background-image: url('./../assets/mute.png');
+}
+
+#canvasSection #exit {
+    background-image: url('./../assets/exit.png');
+    transition: opacity .2s;
+}
+
+#canvasSection #exit.exitHide {
+    opacity: 0;
+    cursor: unset;
+    pointer-events: none;
 }
 
 #canvasSection .overlay {
