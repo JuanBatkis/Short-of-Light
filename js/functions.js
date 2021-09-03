@@ -6,11 +6,15 @@ const showIntro = function() {
 const showInstructions = function() {
 	document.getElementById('introScreen').className = 'intro hidden';
 	document.getElementById('instructions').className = 'intro';
+	document.querySelector('body').className = 'scroll';
+	window.scrollTo(0, 0);
 }
 
 const showLevelSelector = function() {
 	document.getElementById('instructions').className = 'intro hidden';
 	document.getElementById('levelSelection').className = 'intro';
+	document.querySelector('body').className = 'scroll';
+	window.scrollTo(0, 0);
 }
 
 const selectLevel = function (id) {
@@ -25,6 +29,8 @@ const selectLevel = function (id) {
 const startGame = function(level) {
 	document.getElementById('introScreen').className = 'intro hidden';
 	document.getElementById('canvasSection').className = 'intro';
+	window.scrollTo(0, 0);
+	document.querySelector('body').className = '';
 
 	switch (level) {
 		case 'level-1':
@@ -181,6 +187,8 @@ const restart = function() {
 }
 
 const changeLevel = function() {
+	document.querySelector('body').className = 'scroll';
+	window.scrollTo(0, 0);
 	document.getElementById('gameOver').className = 'overlay';
 	document.querySelector('#canvasSection #gameOver #tryAgain').className = '';
 	document.querySelector('#canvasSection #gameOver h2').style.marginBottom = '0px';
@@ -314,12 +322,4 @@ const sound = function(src, id, loop) {
     this.stop = function(){
         this.sound.pause();
     }
-}
-
-function mouseDown() {
-	console.log('onmousedown f');
-}
-
-function mouseUp() {
-	console.log('onmouseup f');
 }

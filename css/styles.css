@@ -568,11 +568,14 @@ section.hidden {
 }
 
 @media all and (max-width: 840px) {
+    body.scroll {
+        overflow-y: scroll;
+    }
     #canvasSection .mobileControl {
         display: block;
         position: absolute;
         right: 50%;
-        bottom: 10px;
+        bottom: 6px;
         transform: translateX(50%);
     }
 
@@ -582,12 +585,14 @@ section.hidden {
     }
 
     #canvasSection .mobileControl > div > div {
-        padding: 5px;
+        padding: 6px;
     }
 
     #canvasSection .mobileControl > div > div > span {
-        font-size: 1.6em;
+        font-size: 1.8em;
         display: inline-block;
+        user-select: none;
+        pointer-events: none;
     }
 
     #canvasSection .mobileControl > div > #upLeft > span {
@@ -632,12 +637,15 @@ section.hidden {
     }
 
     #instructions {
-        overflow: scroll;
+        height: auto;
+        background: var(--dark-col);
+        background: linear-gradient(0deg, var(--dark-col) 0%, var(--light-col) 100%);
         justify-content: flex-start;
+        /* overflow-y: scroll; */
     }
 
     #instructions .container {
-        margin-top: 10px;
+        margin-top: 20px;
     }
 
     #instructions .container .col-6 {
@@ -650,16 +658,19 @@ section.hidden {
     }
 
     #instructions #levelSelect {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     #levelSelection {
-        overflow: scroll;
+        height: auto;
+        background: var(--dark-col);
+        background: linear-gradient(0deg, var(--dark-col) 0%, var(--light-col) 100%);
         justify-content: flex-start;
+        /* overflow-y: scroll; */
     }
 
     #levelSelection .container {
-        margin-top: 10px;
+        margin-top: 20px;
         width: 80%;
     }
 
@@ -672,7 +683,7 @@ section.hidden {
     }
 
     #levelSelection #startGame {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     #winScreen .winImage {

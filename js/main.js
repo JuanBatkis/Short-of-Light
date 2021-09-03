@@ -125,43 +125,85 @@ window.onload = function() {
         }
 	};
 
-	var mouseIsDown = false;
-	var idTimeout;
-	document.querySelector('#upLeft span').onclick = () => {
-		console.log('click');
-	};
-	document.querySelector('#upLeft span').mouseover = () => {
-		console.log('onmousedown');
-		keysDown[37] = true;
-		keysDown[38] = true;
-
-		mouseIsDown = true;
-		idTimeout = setTimeout(function() {
-			if(mouseIsDown) {
-				console.log('onmousedown 2');
-			}
-		}, 2000);
-	};
-	document.querySelector('#upLeft span').mouseout = () => {
-		console.log('onmouseup');
-		keysDown[37] = false;
-		keysDown[38] = false;
-
-		clearTimeout(idTimeout);
-		mouseIsDown = false;
-	};
-	document.querySelector('#upLeft span').touchstart = () => {
-		console.log('touchstart');
+	const upLeftArrow = document.getElementById('upLeft');
+	upLeftArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	upLeftArrow.ontouchstart = () => {
 		keysDown[37] = true;
 		keysDown[38] = true;
 	};
-	document.querySelector('#upLeft span').touchend = () => {
-		console.log('touchend');
+	upLeftArrow.ontouchend = () => {
 		keysDown[37] = false;
 		keysDown[38] = false;
 	};
 
-	
+	const upArrow = document.getElementById('up');
+	upArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	upArrow.ontouchstart = () => {
+		keysDown[38] = true;
+	};
+	upArrow.ontouchend = () => {
+		keysDown[38] = false;
+	};
+
+	const upRightArrow = document.getElementById('upRight');
+	upRightArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	upRightArrow.ontouchstart = () => {
+		keysDown[39] = true;
+		keysDown[38] = true;
+	};
+	upRightArrow.ontouchend = () => {
+		keysDown[39] = false;
+		keysDown[38] = false;
+	};
+
+	const leftArrow = document.getElementById('left');
+	leftArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	leftArrow.ontouchstart = () => {
+		keysDown[37] = true;
+	};
+	leftArrow.ontouchend = () => {
+		keysDown[37] = false;
+	};
+
+	const rightArrow = document.getElementById('right');
+	rightArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	rightArrow.ontouchstart = () => {
+		keysDown[39] = true;
+	};
+	rightArrow.ontouchend = () => {
+		keysDown[39] = false;
+	};
+
+	const downLeftArrow = document.getElementById('downLeft');
+	downLeftArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	downLeftArrow.ontouchstart = () => {
+		keysDown[37] = true;
+		keysDown[40] = true;
+	};
+	downLeftArrow.ontouchend = () => {
+		keysDown[37] = false;
+		keysDown[40] = false;
+	};
+
+	const downArrow = document.getElementById('down');
+	downArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	downArrow.ontouchstart = () => {
+		keysDown[40] = true;
+	};
+	downArrow.ontouchend = () => {
+		keysDown[40] = false;
+	};
+
+	const downRightArrow = document.getElementById('downRight');
+	downRightArrow.addEventListener('contextmenu', e => e.preventDefault() );
+	downRightArrow.ontouchstart = () => {
+		keysDown[39] = true;
+		keysDown[40] = true;
+	};
+	downRightArrow.ontouchend = () => {
+		keysDown[39] = false;
+		keysDown[40] = false;
+	};
 }
 
 const drawGame = function() {
@@ -191,7 +233,7 @@ const drawGame = function() {
 	
 	//Deplete oil left based on difficulty. Pause once the player won
 	if (!player.won) {
-		//player.oil -= 0.1 * difficulty;		
+		player.oil -= 0.1 * difficulty;
 	}
 	oilJar.style.height = (player.oil/10).toFixed(1) + '%';
 
