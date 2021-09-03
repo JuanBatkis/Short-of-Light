@@ -315,3 +315,11 @@ const sound = function(src, id, loop) {
         this.sound.pause();
     }
 }
+
+function mouseDown() {
+	console.log('onmousedown f');
+}
+
+function mouseUp() {
+	console.log('onmouseup f');
+}

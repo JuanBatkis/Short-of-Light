@@ -449,6 +449,10 @@ section.hidden {
     opacity: 0;
 }
 
+#canvasSection .mobileControl {
+    display: none;
+}
+
 #canvasSection .oilCont {
     position: absolute;
     right: 10px;
@@ -561,4 +565,135 @@ section.hidden {
 
 #winScreen .winImage #playAgain h5, #winScreen .winImage #levelReSelect h5 {
     font-size: 1.2em;
+}
+
+@media all and (max-width: 840px) {
+    #canvasSection .mobileControl {
+        display: block;
+        position: absolute;
+        right: 50%;
+        bottom: 10px;
+        transform: translateX(50%);
+    }
+
+    #canvasSection .mobileControl > div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #canvasSection .mobileControl > div > div {
+        padding: 5px;
+    }
+
+    #canvasSection .mobileControl > div > div > span {
+        font-size: 1.6em;
+        display: inline-block;
+    }
+
+    #canvasSection .mobileControl > div > #upLeft > span {
+        transform: rotate(-45deg);
+    }
+    #canvasSection .mobileControl > div > #upRight > span {
+        transform: rotate(45deg);
+    }
+    #canvasSection .mobileControl > div > #left > span {
+        transform: rotate(-90deg);
+    }
+    #canvasSection .mobileControl > div > #right > span {
+        transform: rotate(-90deg);
+    }
+    #canvasSection .mobileControl > div > #downLeft > span {
+        transform: rotate(45deg);
+    }
+    #canvasSection .mobileControl > div > #downRight > span {
+        transform: rotate(-45deg);
+    }
+
+    #titleScreen h1 {
+        font-size: 1.4em;
+    }
+
+    #titleScreen #beginLamp img {
+        width: 100px;
+    }
+
+    #titleScreen #beginLamp h5 {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+
+    #introScreen p,
+    #instructions .container .col-6 p {
+        font-size: 0.8em;
+    }
+
+    #canvasSection .overlay h2 {
+        font-size: 1em;
+    }
+
+    #instructions {
+        overflow: scroll;
+        justify-content: flex-start;
+    }
+
+    #instructions .container {
+        margin-top: 10px;
+    }
+
+    #instructions .container .col-6 {
+        width: calc(100% / 2);
+        padding: 8px;
+    }
+
+    #instructions .container .col-6 .movementContainer > div > div > span {
+        font-size: 1em;
+    }
+
+    #instructions #levelSelect {
+        margin-bottom: 10px;
+    }
+
+    #levelSelection {
+        overflow: scroll;
+        justify-content: flex-start;
+    }
+
+    #levelSelection .container {
+        margin-top: 10px;
+        width: 80%;
+    }
+
+    #levelSelection .container .col-6 {
+        width: 100%;
+    }
+
+    #levelSelection .container .col-6 .description p {
+        font-size: 0.7em;
+    }
+
+    #levelSelection #startGame {
+        margin-bottom: 10px;
+    }
+
+    #winScreen .winImage {
+        background: url(./../assets/win-screen-eyes-closed-mobile.png), url(./../assets/win-screen-mobile.png);
+        background-size: cover, cover;
+        background-position: center, center;
+        background-repeat: no-repeat, no-repeat;
+    }
+
+    #winScreen .winImage.open {
+        background: url(./../assets/win-screen-mobile.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #winScreen .winImage #playAgain, #winScreen .winImage #levelReSelect {
+        width: fit-content;
+    }
+
+    #winScreen .winImage #playAgain h5, #winScreen .winImage #levelReSelect h5 {
+        font-size: 1em;
+    }
 }

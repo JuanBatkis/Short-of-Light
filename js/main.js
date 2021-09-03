@@ -27,14 +27,14 @@ let oilJar = null
 let currentSecond = 0, frameCount = 0, totalFrames = 0, framesLastSecond = 0, lastFrameTime = 0;
 
 let keysDown = {
-	37 : false,
-	38 : false,
-	39 : false,
-	40 : false,
-	65 : false,
-	87 : false,
-	68 : false,
-	83 : false
+	37 : false,	//left
+	38 : false,	//up
+	39 : false,	//right
+	40 : false,	//down
+	65 : false,	//a
+	87 : false,	//w
+	68 : false,	//d
+	83 : false 	//s
 },
 keys = [37,	38,	39,	40,	65,	87,	68,	83];
 
@@ -121,8 +121,44 @@ window.onload = function() {
 
     document.onkeyup = function(e) {
 		if(keys.includes(e.keyCode)) {
-        	keysDown[e.keyCode] = false;
+			keysDown[e.keyCode] = false;
         }
+	};
+
+	var mouseIsDown = false;
+	var idTimeout;
+	document.querySelector('#upLeft span').onclick = () => {
+		console.log('click');
+	};
+	document.querySelector('#upLeft span').mouseover = () => {
+		console.log('onmousedown');
+		keysDown[37] = true;
+		keysDown[38] = true;
+
+		mouseIsDown = true;
+		idTimeout = setTimeout(function() {
+			if(mouseIsDown) {
+				console.log('onmousedown 2');
+			}
+		}, 2000);
+	};
+	document.querySelector('#upLeft span').mouseout = () => {
+		console.log('onmouseup');
+		keysDown[37] = false;
+		keysDown[38] = false;
+
+		clearTimeout(idTimeout);
+		mouseIsDown = false;
+	};
+	document.querySelector('#upLeft span').touchstart = () => {
+		console.log('touchstart');
+		keysDown[37] = true;
+		keysDown[38] = true;
+	};
+	document.querySelector('#upLeft span').touchend = () => {
+		console.log('touchend');
+		keysDown[37] = false;
+		keysDown[38] = false;
 	};
 
 	
@@ -155,7 +191,7 @@ const drawGame = function() {
 	
 	//Deplete oil left based on difficulty. Pause once the player won
 	if (!player.won) {
-		player.oil -= 0.1 * difficulty;		
+		//player.oil -= 0.1 * difficulty;		
 	}
 	oilJar.style.height = (player.oil/10).toFixed(1) + '%';
 
