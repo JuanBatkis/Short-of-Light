@@ -24,6 +24,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, p, span {
     font-family: 'Press Start 2P', cursive;
+    user-select: none;
 }
 
 section.intro {
@@ -260,6 +261,10 @@ section.hidden {
     transition: transform .5s;
 }
 
+#levelSelection .container .col-6 img.levelMobile {
+    display: none;
+}
+
 #levelSelection .container .col-6:hover img {
     transform: scale(1.1);
 }
@@ -424,6 +429,7 @@ section.hidden {
 }
 
 #canvasSection #bedTime {
+    pointer-events: none;
     flex-direction: column;
     background-color: #0f071740;
     transition: opacity 2s;
@@ -567,15 +573,32 @@ section.hidden {
     font-size: 1.2em;
 }
 
+.ghLink {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    opacity: .2;
+    z-index: 9999;
+    transform: scale(1);
+    transition: transform .3s, opacity .3s;
+}
+
+.ghLink:hover {
+    opacity: .6;
+    transform: scale(1.1);
+}
+
+.ghLink img {
+    image-rendering: pixelated;
+    width: 35px;
+}
+
 @media all and (max-width: 840px) {
-    body.scroll {
-        overflow-y: scroll;
-    }
     #canvasSection .mobileControl {
         display: block;
         position: absolute;
         right: 50%;
-        bottom: 6px;
+        bottom: 15px;
         transform: translateX(50%);
     }
 
@@ -588,11 +611,26 @@ section.hidden {
         padding: 6px;
     }
 
-    #canvasSection .mobileControl > div > div > span {
+    #canvasSection .mobileControl > div > div > span,
+    #canvasSection .mobileControl > div > div > img {
         font-size: 1.8em;
         display: inline-block;
         user-select: none;
         pointer-events: none;
+        opacity: 0.6;
+    }
+
+    #canvasSection .mobileControl > div > #joystick {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #canvasSection .mobileControl > div > #joystick > img {
+        opacity: 1;
+        width: 100%;
+        image-rendering: pixelated;
     }
 
     #canvasSection .mobileControl > div > #upLeft > span {
@@ -629,19 +667,11 @@ section.hidden {
 
     #introScreen p,
     #instructions .container .col-6 p {
-        font-size: 0.8em;
+        font-size: 0.6em;
     }
 
     #canvasSection .overlay h2 {
         font-size: 1em;
-    }
-
-    #instructions {
-        height: auto;
-        background: var(--dark-col);
-        background: linear-gradient(0deg, var(--dark-col) 0%, var(--light-col) 100%);
-        justify-content: flex-start;
-        /* overflow-y: scroll; */
     }
 
     #instructions .container {
@@ -653,33 +683,42 @@ section.hidden {
         padding: 8px;
     }
 
+    #instructions .container .col-6 img {
+        width: 70px;
+    }
+
     #instructions .container .col-6 .movementContainer > div > div > span {
-        font-size: 1em;
+        font-size: 0.8em;
     }
 
     #instructions #levelSelect {
         margin-bottom: 20px;
     }
 
-    #levelSelection {
-        height: auto;
-        background: var(--dark-col);
-        background: linear-gradient(0deg, var(--dark-col) 0%, var(--light-col) 100%);
-        justify-content: flex-start;
-        /* overflow-y: scroll; */
-    }
-
     #levelSelection .container {
         margin-top: 20px;
-        width: 80%;
+        width: 70%;
     }
 
     #levelSelection .container .col-6 {
         width: 100%;
+        padding: 12px 2px;
+    }
+
+    #levelSelection .container .col-6 img.levelDesktop {
+        display: none;
+    }
+    #levelSelection .container .col-6 img.levelMobile {
+        display: block;
+        width: 100%;
+    }
+
+    #levelSelection .container .col-6 p {
+        font-size: 0.8em;
     }
 
     #levelSelection .container .col-6 .description p {
-        font-size: 0.7em;
+        font-size: 0.6em;
     }
 
     #levelSelection #startGame {

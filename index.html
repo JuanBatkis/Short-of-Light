@@ -76,7 +76,8 @@
     <section id="levelSelection" class="intro hidden">
         <div class="container">
             <div id="level-1" onclick="selectLevel(this.id)" class="col-6">
-                <img src="./assets/level-1.png" alt="Level 1">
+                <img src="./assets/level-1.png" class="levelDesktop" alt="Level 1">
+                <img src="./assets/level-1-mobile.png" class="levelMobile" alt="Level 1">
                 <p>EASY</p>
                 <div class="description">
                     <p>3 SHADOWS,</p>
@@ -87,7 +88,8 @@
                 </div>
             </div>
             <div id="level-2" onclick="selectLevel(this.id)" class="col-6">
-                <img src="./assets/level-2.png" alt="Level 2">
+                <img src="./assets/level-2.png" class="levelDesktop" alt="Level 2">
+                <img src="./assets/level-2-mobile.png" class="levelMobile" alt="Level 2">
                 <p>NORMAL</p>
                 <div class="description">
                     <p>4 SHADOWS,</p>
@@ -98,7 +100,8 @@
                 </div>
             </div>
             <div id="level-3" onclick="selectLevel(this.id)" class="col-6">
-                <img src="./assets/level-3.png" alt="Level 3">
+                <img src="./assets/level-3.png" class="levelDesktop" alt="Level 3">
+                <img src="./assets/level-3-mobile.png" class="levelMobile" alt="Level 3">
                 <p>HARD</p>
                 <div class="description">
                     <p>5 SHADOWS,</p>
@@ -156,6 +159,9 @@
                 <div id="left">
                     <span>↑</span>
                 </div>
+                <div id="joystick">
+                    <img src="./assets/joystick.png" alt="joystick">
+                </div>
                 <div id="right">
                     <span>↓</span>
                 </div>
@@ -184,6 +190,9 @@
         </div>
         <div class="winOverlay"></div>
     </section>
+    <a class="ghLink" href="https://github.com/JuanBatkis/Short-of-Light" target="_blank">
+        <img src="./assets/github.png" alt="GitHub">
+    </a>
 </body>
 
 <script src="./js/maps.js"></script>

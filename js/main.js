@@ -204,6 +204,62 @@ window.onload = function() {
 		keysDown[39] = false;
 		keysDown[40] = false;
 	};
+
+	const mobileControl = document.querySelector('.mobileControl');
+	const mcLeft = mobileControl.offsetLeft, mcTop = mobileControl.offsetTop, mcHeight = mobileControl.clientHeight, mcWidth = mobileControl.clientWidth;
+	const joystick = document.querySelector('#joystick img');
+	const jHeight = joystick.clientHeight, jWidth = joystick.clientWidth;
+	mobileControl.ontouchstart = (event) => {
+		joystick.style.transition = 'transform .2s';
+		let x = event.touches[0].clientX - mcLeft - mcWidth; //x position within the element.
+      	let y = -(event.touches[0].clientY - mcTop - mcHeight/2);  //y position within the element.
+		x = (x > (mcWidth/2 - jWidth/2)) ? mcWidth/2 - jWidth/2 : x;
+		x = (x < -(mcWidth/2 - jWidth/2)) ? -(mcWidth/2 - jWidth/2) : x;
+		y = (y > (mcHeight/2 - jHeight/2)) ? (mcHeight/2 - jHeight/2) : y;
+		y = (y < -(mcHeight/2 - jHeight/2)) ? -(mcHeight/2 - jHeight/2) : y;
+		joystick.style.transform = 'translate(' + x + 'px,' + -y + 'px)';
+	};
+	mobileControl.ontouchmove = (event) => {
+		joystick.style.transition = 'transform 0s';
+		let x = event.touches[0].clientX - mcLeft - mcWidth; //x position within the element.
+      	let y = -(event.touches[0].clientY - mcTop - mcHeight/2);  //y position within the element.
+		
+		if (y > mcHeight/4) {
+			keysDown[38] = true;
+			keysDown[40] = false;
+		} else if (y < -mcHeight/4) {
+			keysDown[38] = false;
+			keysDown[40] = true;
+		} else {
+			keysDown[38] = false;
+			keysDown[40] = false;
+		}
+
+		if (x > mcWidth/4) {
+			keysDown[37] = false;
+			keysDown[39] = true;
+		} else if (x < -mcHeight/4) {
+			keysDown[37] = true;
+			keysDown[39] = false;
+		} else {
+			keysDown[37] = false;
+			keysDown[39] = false;
+		}
+
+		x = (x > (mcWidth/2 - jWidth/2)) ? mcWidth/2 - jWidth/2 : x;
+		x = (x < -(mcWidth/2 - jWidth/2)) ? -(mcWidth/2 - jWidth/2) : x;
+		y = (y > (mcHeight/2 - jHeight/2)) ? (mcHeight/2 - jHeight/2) : y;
+		y = (y < -(mcHeight/2 - jHeight/2)) ? -(mcHeight/2 - jHeight/2) : y;
+		joystick.style.transform = 'translate(' + x + 'px,' + -y + 'px)';
+	};
+	mobileControl.ontouchend = () => {
+		keysDown[37] = false;
+		keysDown[38] = false;
+		keysDown[39] = false;
+		keysDown[40] = false;
+		joystick.style.transform = 'translate(0px,0px)';
+		joystick.style.transition = 'transform .2s';
+	};
 }
 
 const drawGame = function() {
