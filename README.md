@@ -1,4 +1,4 @@
-# Short of Light![Game Icon](https://github.com/JuanBatkis/Short-of-Light/blob/master/assets/page-icon.png?raw=true)
+# [Game Icon](https://github.com/JuanBatkis/Short-of-Light/blob/master/assets/page-icon.png?raw=true)Short of Light!
 Short of Light is a mini-game created as a personal project, written entirely in vanilla JavaScript using the [Canvas element](https://www.w3schools.com/html/html5_canvas.asp). Feel free to reach out for any questions, comments, or suggestions!
 
 ## Introduction
