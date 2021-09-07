@@ -17,9 +17,12 @@ But you mustn't lose hope. Confront your **shadows**, find your inner strength a
 
 ### Thank you for playing! ![Oil](https://github.com/JuanBatkis/Short-of-Light/blob/master/assets/oil.png?raw=true)
 
-## WARNING!!  
+---
+
+##  **WARNING!!** :warning:
 ### Up ahead are what may be considered as cheats and walkthroughs. 
 ### Proceed with caution!
+### ·
 ### ·
 ### ·
 ### ·
